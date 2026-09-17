@@ -1,0 +1,689 @@
+/*
+  style.css
+  ---------
+  Main stylesheet for ExamForge.
+  Design philosophy: clean academic aesthetic — dark navy + warm amber accents.
+  Feels like a serious exam tool without being sterile.
+  
+  Structure:
+  1. CSS Variables (design tokens)
+  2. Reset & base
+  3. Site header
+  4. Index / Upload page
+  5. Quiz page
+  6. Results page
+  7. Shared components (buttons, modals, etc.)
+  8. Animations
+*/
+
+/* =========================================
+   1. CSS VARIABLES (design tokens)
+========================================= */
+:root {
+  --navy:       #0f172a;
+  --navy-2:     #1e293b;
+  --navy-3:     #334155;
+  --amber:      #f59e0b;
+  --amber-light:#fcd34d;
+  --cream:      #fef9f0;
+  --text-main:  #e2e8f0;
+  --text-muted: #94a3b8;
+  --green:      #22c55e;
+  --red:        #ef4444;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --shadow:     0 4px 24px rgba(0,0,0,0.35);
+}
+
+/* =========================================
+   2. RESET & BASE
+========================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+h1, h2, h3 { font-family: 'Syne', sans-serif; }
+
+a { color: var(--amber); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* =========================================
+   3. SITE HEADER
+========================================= */
+.site-header {
+  border-bottom: 1px solid var(--navy-3);
+  padding: 0 5vw;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--amber);
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-nav { display: flex; align-items: center; gap: 18px; font-size: .85rem; }
+.site-nav a { color: var(--text-muted); }
+.site-nav a:hover, .site-nav a.active { color: var(--amber); text-decoration: none; }
+.site-nav .btn-home { color: var(--amber); }
+
+.btn-home {
+  font-size: 0.875rem;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  border-radius: 999px;
+  padding: 6px 16px;
+  transition: background 0.2s;
+}
+.btn-home:hover { background: rgba(245,158,11,0.1); text-decoration: none; }
+
+/* =========================================
+   4. INDEX / UPLOAD PAGE
+========================================= */
+.hero {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  text-align: center;
+}
+
+/* Dashboard and study library */
+.app-main { max-width: 1080px; margin: 0 auto; padding: 64px 24px 80px; }
+.page-intro { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 38px; }
+.page-intro h1 { color: var(--cream); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 6px 0 12px; }
+.page-intro p:not(.eyebrow) { color: var(--text-muted); max-width: 620px; }
+.eyebrow { color: var(--amber); font-size: .7rem; font-weight: 700; letter-spacing: .13em; }
+.btn-primary { display: inline-block; background: var(--amber); border: none; color: var(--navy); border-radius: 999px; padding: 12px 20px; font-family: 'Syne', sans-serif; font-weight: 700; white-space: nowrap; cursor: pointer; }
+.btn-primary:hover { background: var(--amber-light); text-decoration: none; }
+.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.metric-grid article, .panel, .quiz-card { background: var(--navy-2); border: 1px solid var(--navy-3); box-shadow: var(--shadow); }
+.metric-grid article { border-radius: var(--radius); padding: 22px 24px; }
+.metric-grid span { display: block; color: var(--text-muted); font-size: .83rem; margin-bottom: 7px; }
+.metric-grid strong { color: var(--cream); font: 800 2rem 'Syne', sans-serif; }
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.panel { border-radius: var(--radius-lg); padding: 26px; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.panel-head h2, .quiz-card h2 { color: var(--cream); font-size: 1.2rem; margin-top: 4px; }
+.panel-head a { font-size: .85rem; }
+.list-stack { display: grid; gap: 10px; }
+.activity-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 0; border-bottom: 1px solid var(--navy-3); }
+.activity-row:last-child { border-bottom: 0; }
+.activity-row strong, .activity-row span { display: block; }
+.activity-row strong { color: var(--cream); font-size: .92rem; overflow-wrap: anywhere; }
+.activity-row span { color: var(--text-muted); font-size: .78rem; margin-top: 3px; }
+.btn-small { background: transparent; color: var(--amber); border: 1px solid var(--amber); border-radius: 999px; padding: 6px 11px; cursor: pointer; font: 600 .75rem 'Syne', sans-serif; }
+.score-chip { color: var(--green); background: rgba(34,197,94,.1); padding: 6px 9px; border-radius: 999px; font-size: .8rem; }
+.empty-state { color: var(--text-muted); padding: 26px 5px; font-size: .9rem; text-align: center; }
+.library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 18px; }
+.quiz-card { border-radius: var(--radius-lg); padding: 24px; min-height: 220px; display: flex; flex-direction: column; }
+.quiz-card .quiz-meta { color: var(--text-muted); font-size: .85rem; margin: 14px 0 6px; }
+.source-label { color: var(--text-muted); font-size: .75rem; overflow-wrap: anywhere; }
+.card-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 22px; }
+.btn-text { background: none; border: 0; color: var(--text-muted); cursor: pointer; font-size: .8rem; }
+.btn-text:hover { color: var(--red); }
+
+.hero-text h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--cream);
+}
+
+.hero-text h1 em {
+  font-style: normal;
+  color: var(--amber);
+}
+
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+/* Upload card */
+.upload-card {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
+}
+
+/* Drag & drop zone */
+.drop-zone {
+  border: 2px dashed var(--navy-3);
+  border-radius: var(--radius);
+  padding: 40px 24px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 24px;
+}
+.drop-zone:hover, .drop-zone.dragging {
+  border-color: var(--amber);
+  background: rgba(245,158,11,0.04);
+}
+
+.drop-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.drop-label { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.05rem; margin-bottom: 6px; }
+.drop-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px; }
+.drop-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; }
+
+/* Browse label styled as button */
+.btn-upload {
+  display: inline-block;
+  background: var(--navy-3);
+  color: var(--text-main);
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-upload:hover { background: var(--amber); color: var(--navy); }
+
+/* File preview row */
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--navy-3);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  margin-bottom: 24px;
+}
+.file-icon { font-size: 1.2rem; }
+.file-name { flex: 1; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; padding: 0 4px; }
+.btn-remove:hover { color: var(--red); }
+
+/* Settings row */
+.settings-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.setting-label {
+  flex: 1;
+  min-width: 140px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.setting-select {
+  background: var(--navy-3);
+  color: var(--text-main);
+  border: 1px solid var(--navy-3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.setting-select:focus { border-color: var(--amber); }
+
+/* Generate button */
+.btn-generate {
+  width: 100%;
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  padding: 14px 32px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, opacity 0.2s;
+}
+.btn-generate:hover:not(:disabled) { background: var(--amber-light); transform: translateY(-1px); }
+.btn-generate:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Status message */
+.status-msg {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  text-align: center;
+}
+.status-msg.loading { background: rgba(245,158,11,0.1); color: var(--amber); }
+.status-msg.error   { background: rgba(239,68,68,0.1);  color: var(--red); }
+.status-msg.success { background: rgba(34,197,94,0.1);  color: var(--green); }
+
+/* Feature pills */
+.features { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.pill {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   5. QUIZ PAGE
+========================================= */
+.quiz-body { background: var(--navy); }
+
+/* Proctoring warning banner at the very top */
+.proctor-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  animation: slideDown 0.3s ease;
+}
+.proctor-banner button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Quiz header */
+.quiz-header {
+  background: var(--navy-2);
+  border-bottom: 1px solid var(--navy-3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.quiz-header-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.quiz-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--amber); font-size: 1.1rem; flex-shrink: 0; }
+
+/* Progress bar */
+.quiz-progress { flex: 1; }
+.quiz-progress span { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
+.progress-bar-track { background: var(--navy-3); border-radius: 999px; height: 5px; overflow: hidden; }
+.progress-bar-fill { background: var(--amber); height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+
+/* Timer */
+.timer-box {
+  background: var(--navy-3);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: background 0.3s, color 0.3s;
+}
+.timer-box.warning { background: rgba(239,68,68,0.2); color: var(--red); animation: pulse 1s infinite; }
+.timer-icon { font-size: 0.9rem; }
+
+/* Violation strip */
+.violation-strip {
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: var(--red);
+  text-align: center;
+  padding: 8px;
+  font-size: 0.875rem;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+}
+
+/* Main quiz area */
+.quiz-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+
+/* Question card */
+.question-card {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.question-type-label {
+  display: inline-block;
+  background: var(--navy-3);
+  color: var(--amber);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  color: var(--cream);
+}
+
+/* MCQ options grid */
+.options-grid {
+  display: grid;
+  gap: 12px;
+}
+
+/* Each MCQ option button */
+.option-btn {
+  background: var(--navy-3);
+  border: 2px solid transparent;
+  color: var(--text-main);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.4;
+}
+.option-btn:hover   { border-color: var(--amber); background: rgba(245,158,11,0.06); }
+.option-btn.selected { border-color: var(--amber); background: rgba(245,158,11,0.12); color: var(--amber-light); }
+
+/* True/False buttons */
+.tf-buttons { display: flex; gap: 16px; }
+.tf-btn {
+  flex: 1;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 2px solid var(--navy-3);
+  background: var(--navy-3);
+  color: var(--text-main);
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tf-btn:hover    { border-color: var(--amber); }
+.tf-btn.selected { border-color: var(--amber); background: rgba(245,158,11,0.12); color: var(--amber-light); }
+
+/* Quiz navigation */
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.btn-nav {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  color: var(--text-main);
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-nav:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
+.btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Navigation dots */
+.nav-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; flex: 1; }
+.nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--navy-3);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.nav-dot.answered { background: var(--amber); }
+.nav-dot.current  { background: var(--amber-light); transform: scale(1.3); }
+
+/* Submit row */
+.submit-row {
+  margin-top: 24px;
+  text-align: center;
+}
+.btn-submit-exam {
+  background: var(--green);
+  color: var(--navy);
+  border: none;
+  padding: 14px 48px;
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+.btn-submit-exam:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* =========================================
+   6. RESULTS PAGE
+========================================= */
+.results-body { background: var(--navy); }
+
+.results-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Score card */
+.score-card {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+  animation: fadeInUp 0.4s ease;
+}
+
+/* Donut chart wrapper */
+.score-circle-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 28px;
+}
+
+.score-donut { width: 100%; height: 100%; transform: rotate(-90deg); }
+.donut-bg   { fill: none; stroke: var(--navy-3); stroke-width: 10; }
+.donut-fill {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s ease;
+}
+
+.score-text-inside {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  line-height: 1.2;
+}
+.score-pct   { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--amber); display: block; }
+.score-label { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Stats row */
+.score-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.stat-box {
+  background: var(--navy-3);
+  border-radius: var(--radius);
+  padding: 14px 24px;
+  min-width: 80px;
+}
+.stat-num { display: block; font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; }
+.stat-lbl { font-size: 0.75rem; color: var(--text-muted); }
+.stat-box.correct   .stat-num { color: var(--green); }
+.stat-box.wrong     .stat-num { color: var(--red); }
+.stat-box.total     .stat-num { color: var(--amber); }
+.stat-box.violation .stat-num { color: var(--text-muted); }
+
+/* Pass/Fail badge */
+.result-badge {
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+.result-badge.pass { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid var(--green); }
+.result-badge.fail { background: rgba(239,68,68,0.15);  color: var(--red);   border: 1px solid var(--red); }
+
+.penalty-note { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; }
+
+/* Review section */
+.review-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--cream);
+}
+
+.review-item {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  animation: fadeInUp 0.3s ease both;
+}
+.review-item.correct-item { border-left: 4px solid var(--green); }
+.review-item.wrong-item   { border-left: 4px solid var(--red); }
+
+.review-q-num    { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
+.review-q-text   { font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+.review-answers  { display: flex; gap: 20px; font-size: 0.875rem; flex-wrap: wrap; }
+.answer-yours    { color: var(--text-muted); }
+.answer-correct  { color: var(--green); }
+.answer-yours.wrong-ans { color: var(--red); }
+.review-explanation { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; border-top: 1px solid var(--navy-3); padding-top: 8px; }
+
+/* =========================================
+   7. MODAL (shared)
+========================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-box {
+  background: var(--navy-2);
+  border: 1px solid var(--navy-3);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.modal-box h2 { margin-bottom: 14px; font-size: 1.5rem; }
+.modal-box p  { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+.modal-hint   { font-size: 0.8rem !important; color: var(--red) !important; }
+.btn-skip {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.btn-skip:hover { color: var(--text-main); }
+
+/* =========================================
+   8. ANIMATIONS
+========================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 600px) {
+  .site-nav { gap: 10px; font-size: .75rem; }
+  .page-intro { align-items: flex-start; flex-direction: column; }
+  .metric-grid, .dashboard-grid { grid-template-columns: 1fr; }
+  .app-main { padding-top: 42px; }
+  .quiz-header-inner { flex-wrap: wrap; gap: 10px; }
+  .question-card { padding: 24px; }
+  .tf-buttons { flex-direction: column; }
+  .score-card { padding: 24px; }
+  .score-stats { gap: 10px; }
+  .stat-box { padding: 10px 16px; min-width: 70px; }
+}

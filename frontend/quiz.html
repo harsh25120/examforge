@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExamForge — Quiz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="quiz-body">
+
+  <!-- =============================================
+       PROCTORING WARNING BANNER
+       Shown when user switches tab or goes out of fullscreen
+  ============================================== -->
+  <div class="proctor-banner" id="proctorBanner" style="display:none;">
+    ⚠️ Warning: Tab switch or focus loss detected! This has been recorded.
+    <button onclick="document.getElementById('proctorBanner').style.display='none'">Dismiss</button>
+  </div>
+
+  <!-- =============================================
+       QUIZ HEADER — timer, progress, question count
+  ============================================== -->
+  <header class="quiz-header">
+    <div class="quiz-header-inner">
+      <span class="quiz-logo">ExamForge</span>
+
+      <!-- Progress: e.g. "Question 3 / 10" -->
+      <div class="quiz-progress">
+        <span id="questionCounter">Question 1 / 10</span>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressFill" style="width:10%"></div>
+        </div>
+      </div>
+
+      <!-- Countdown timer -->
+      <div class="timer-box" id="timerBox">
+        <span class="timer-icon">⏱</span>
+        <span id="timerDisplay">10:00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- =============================================
+       MAIN QUIZ AREA
+  ============================================== -->
+  <main class="quiz-main">
+
+    <!-- Violation counter (shows how many proctoring warnings) -->
+    <div class="violation-strip" id="violationStrip" style="display:none;">
+      🔴 Proctoring violations: <strong id="violationCount">0</strong>
+    </div>
+
+    <!-- Question card -->
+    <div class="question-card" id="questionCard">
+      <p class="question-type-label" id="questionTypeLabel">MCQ</p>
+      <h2 class="question-text" id="questionText">Loading question…</h2>
+
+      <!-- MCQ options container -->
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <!-- True/False buttons -->
+      <div class="tf-buttons" id="tfButtons" style="display:none;">
+        <button class="tf-btn" id="trueBtn" onclick="selectTF('True')">✅ True</button>
+        <button class="tf-btn" id="falseBtn" onclick="selectTF('False')">❌ False</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="quiz-nav">
+      <button class="btn-nav" id="prevBtn" onclick="prevQuestion()" disabled>← Prev</button>
+      <span class="nav-dots" id="navDots"></span>
+      <button class="btn-nav" id="nextBtn" onclick="nextQuestion()">Next →</button>
+    </div>
+
+    <!-- Submit exam button (visible on last question) -->
+    <div class="submit-row" id="submitRow" style="display:none;">
+      <button class="btn-submit-exam" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+  </main>
+
+  <!-- =============================================
+       FULLSCREEN PROMPT MODAL
+       Asks user to go fullscreen before starting
+  ============================================== -->
+  <div class="modal-overlay" id="fullscreenModal">
+    <div class="modal-box">
+      <h2>Ready to begin?</h2>
+      <p>For the best exam experience and to enable proctoring, please enter fullscreen mode.</p>
+      <p class="modal-hint">Tab switches and focus changes will be recorded as violations.</p>
+      <button class="btn-generate" onclick="startExam()">Enter Fullscreen & Start</button>
+      <br/><br/>
+      <button class="btn-skip" onclick="startExamNoFullscreen()">Start without fullscreen</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TIME UP MODAL
+  ============================================== -->
+  <div class="modal-overlay" id="timeUpModal" style="display:none;">
+    <div class="modal-box">
+      <h2>⏰ Time's Up!</h2>
+      <p>Your exam time has expired. Your answers have been submitted automatically.</p>
+      <button class="btn-generate" onclick="submitExam()">View Results</button>
+    </div>
+  </div>
+
+  <script src="js/quiz.js"></script>
+</body>
+</html>

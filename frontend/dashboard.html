@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamForge — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="logo" href="/">ExamForge</a><nav class="site-nav"><a class="active" href="/dashboard">Dashboard</a><a href="/library">Study library</a><a class="btn-home" href="/">New quiz</a></nav></div></header>
+  <main class="app-main">
+    <section class="page-intro"><div><p class="eyebrow">YOUR LEARNING SPACE</p><h1>Study with a little more direction.</h1><p>Build PDF study sets, revisit them anytime, and keep an eye on your progress.</p></div><a class="btn-primary" href="/">+ Create study set</a></section>
+    <section class="metric-grid"><article><span>Saved study sets</span><strong id="savedCount">0</strong></article><article><span>Completed attempts</span><strong id="attemptCount">0</strong></article><article><span>Average score</span><strong id="averageScore">0%</strong></article></section>
+    <section class="dashboard-grid"><div class="panel"><div class="panel-head"><div><p class="eyebrow">RECENTLY CREATED</p><h2>Study library</h2></div><a href="/library">View all →</a></div><div id="recentQuizzes" class="list-stack"></div></div><div class="panel"><div class="panel-head"><div><p class="eyebrow">YOUR ACTIVITY</p><h2>Latest results</h2></div></div><div id="recentAttempts" class="list-stack"></div></div></section>
+  </main><script src="js/dashboard.js"></script>
+</body></html>

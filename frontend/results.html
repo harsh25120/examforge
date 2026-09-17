@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExamForge — Results</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="results-body">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">ExamForge</span>
+      <nav class="site-nav"><a href="/dashboard">Dashboard</a><a href="/" class="btn-home">New quiz</a></nav>
+    </div>
+  </header>
+
+  <main class="results-main">
+
+    <!-- Score Summary Card -->
+    <div class="score-card" id="scoreCard">
+      <div class="score-circle-wrap">
+        <!-- SVG donut chart for score -->
+        <svg class="score-donut" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" class="donut-bg"/>
+          <circle cx="60" cy="60" r="50" class="donut-fill" id="donutFill"
+                  stroke-dasharray="0 314" stroke-dashoffset="78.5"/>
+        </svg>
+        <div class="score-text-inside">
+          <span class="score-pct" id="scorePct">0%</span>
+          <span class="score-label">Score</span>
+        </div>
+      </div>
+
+      <div class="score-stats">
+        <div class="stat-box correct">
+          <span class="stat-num" id="statCorrect">0</span>
+          <span class="stat-lbl">Correct</span>
+        </div>
+        <div class="stat-box wrong">
+          <span class="stat-num" id="statWrong">0</span>
+          <span class="stat-lbl">Wrong</span>
+        </div>
+        <div class="stat-box total">
+          <span class="stat-num" id="statTotal">0</span>
+          <span class="stat-lbl">Total</span>
+        </div>
+        <div class="stat-box violation">
+          <span class="stat-num" id="statViolations">0</span>
+          <span class="stat-lbl">Violations</span>
+        </div>
+      </div>
+
+      <!-- Pass / Fail badge -->
+      <div class="result-badge" id="resultBadge">—</div>
+
+      <!-- Proctoring penalty note -->
+      <p class="penalty-note" id="penaltyNote" style="display:none;"></p>
+    </div>
+
+    <!-- Question-by-question review -->
+    <section class="review-section">
+      <h2 class="review-heading">Answer Review</h2>
+      <div id="reviewList"></div>
+    </section>
+
+  </main>
+
+  <script src="js/results.js"></script>
+</body>
+</html>

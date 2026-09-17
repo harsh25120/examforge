@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExamForge — Smart Quiz Generator</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- =============================================
+       HEADER / NAV
+  ============================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">ExamForge</span>
+      <nav class="site-nav"><a href="/dashboard">Dashboard</a><a href="/library">Study library</a></nav>
+    </div>
+  </header>
+
+  <!-- =============================================
+       HERO SECTION
+  ============================================== -->
+  <main class="hero">
+    <div class="hero-text">
+      <h1>Upload your PDF.<br/><em>We'll build the quiz.</em></h1>
+      <p class="hero-sub">
+        Drop any study document and ExamForge automatically generates
+        multiple-choice and true/false questions — then proctors your attempt.
+      </p>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="upload-card" id="uploadCard">
+
+      <!-- Drag & Drop Zone -->
+      <div class="drop-zone" id="dropZone">
+        <div class="drop-icon">📄</div>
+        <p class="drop-label">Drag & drop your PDF here</p>
+        <p class="drop-sub">or</p>
+        <label class="btn-upload" for="pdfInput">Browse file</label>
+        <input type="file" id="pdfInput" accept=".pdf" hidden />
+        <p class="drop-hint">Max 10 MB · PDF only</p>
+      </div>
+
+      <!-- File selected preview (hidden initially) -->
+      <div class="file-preview" id="filePreview" style="display:none;">
+        <span class="file-icon">📋</span>
+        <span class="file-name" id="fileName">—</span>
+        <button class="btn-remove" id="removeFile" title="Remove">✕</button>
+      </div>
+
+      <!-- Settings row -->
+      <div class="settings-row">
+        <label class="setting-label">Quiz duration
+          <select id="timerSelect" class="setting-select">
+            <option value="300">5 minutes</option>
+            <option value="600" selected>10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="1800">30 minutes</option>
+          </select>
+        </label>
+        <label class="setting-label">Proctoring
+          <select id="proctorSelect" class="setting-select">
+            <option value="on" selected>Enabled</option>
+            <option value="off">Disabled</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Generate button -->
+      <button class="btn-generate" id="generateBtn" disabled>
+        Generate Quiz
+      </button>
+
+      <!-- Status messages -->
+      <div class="status-msg" id="statusMsg" style="display:none;"></div>
+    </div>
+
+    <!-- Feature pills -->
+    <div class="features">
+      <span class="pill">⏱ Timed exam</span>
+      <span class="pill">🔒 Tab-switch detection</span>
+      <span class="pill">📊 Instant score report</span>
+      <span class="pill">❓ MCQ + True/False</span>
+    </div>
+  </main>
+
+  <script src="js/upload.js"></script>
+</body>
+</html>
